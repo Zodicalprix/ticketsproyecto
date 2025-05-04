@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import './screens/Login.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,28 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("TICKETw1"),
-        ),
-        body: Row(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(onPressed: () {
-          
-                },
-                child: Text("Registrarse"),
-              ),
-              ElevatedButton(onPressed: () {
-                
-                }, child: Text("Iniciar"))
-            ],
-          ),
-        ),
+      home: Loginscreen(),
       );
   }
 }
+
+
 
 
