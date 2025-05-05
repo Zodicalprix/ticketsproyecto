@@ -49,7 +49,7 @@ class Loginscreen extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black,
                       offset: Offset(0.0, 5.0),
-                      blurRadius: 15.0
+                      blurRadius: 5.0
                     )
                   ],
                   color: Colors.white,
