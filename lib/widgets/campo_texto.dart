@@ -18,18 +18,20 @@ const CampoTexto({
 @override
 Widget build(BuildContext context){
 return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+    padding: const EdgeInsets.symmetric(horizontal: 0.0),
     child: TextField(
       controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15)
               ),
             focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400)
+            borderSide: BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(15)
               ),
-          fillColor: Colors.grey.shade200,
+          fillColor: Color(0xFFF1F0FB),
           filled: true,
           hintText: hintText,
         ),

@@ -1,0 +1,14 @@
+Pantallas necesarias:
+>Perfil
+>Login
+>Registrarse
+>RecuperarContra
+>Home
+>CrearTicket
+>ModificarTicket
+>VerTicket
+
+Back:
+Usar firebase para almacenar y usar la data recolectada
+
+
