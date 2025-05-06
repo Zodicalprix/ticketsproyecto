@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticketsproyecto/screens/Home.dart';
+import 'package:ticketsproyecto/src/screens/Home.dart';
 
 import '../widgets/campo_texto.dart';
 class Loginscreen extends StatelessWidget {

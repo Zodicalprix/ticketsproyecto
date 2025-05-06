@@ -11,4 +11,9 @@ Pantallas necesarias:
 Back:
 Usar firebase para almacenar y usar la data recolectada
 
-
+Colores:
+-Rhino 0xFF2A3A5B
+-Mirage 0xFF161927
+-Azul gris 0xFF4B5B7C
+-Azul acero 0xFF6E8FAF
+-Gris suave 0xFFA1BFD9
