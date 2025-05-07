@@ -12,8 +12,9 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF1F0FB),
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        automaticallyImplyLeading: true, // para que se muestre el ícono del Drawer
+        backgroundColor: Color(0xFF4B5B7C),
+        automaticallyImplyLeading:
+            true, // para que se muestre el ícono del Drawer
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -25,7 +26,9 @@ class Homepage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Porfilepagina()),
+                  MaterialPageRoute(
+                    builder: (context) => const Porfilepagina(),
+                  ),
                 );
               },
               icon: Icon(Icons.person),
@@ -34,27 +37,20 @@ class Homepage extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-        backgroundColor: Color(0xFF161927),
+        backgroundColor: Color(0xFFF1F0FB),
         child: ListView(
-          
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF2A3A5B)),
+              decoration: BoxDecoration(color: Color(0xFF4B5B7C)),
               child: Text(
                 'Menú de Navegación',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home,
-              color: Colors.white),
-              title: Text(
-                'Home',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
+              leading: Icon(Icons.home, color: Colors.white),
+              title: Text('Home', style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -85,9 +81,40 @@ class Homepage extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: BotonCrear(),
+      body: Row(
+        children: [
+          // Lado izquierdo
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: Container(
+                decoration: BoxDecoration(color: Color(0xFF4B5B7C)),
+                child: Center(
+                  child: Text(
+                    "Lado izquierdo",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Lado derecho
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Container(height: 100, color: Colors.amber),
+                  SizedBox(height: 10),
+                  Container(height: 100, color: Colors.green),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
