@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
+import 'package:ticketsproyecto/src/widgets/drawer.dart';
 import '../widgets/botones_icons.dart';
 
 class Homepage extends StatelessWidget {
@@ -12,16 +13,20 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF1F0FB),
       appBar: AppBar(
+        leading: IconDrawer(),
         backgroundColor: Color(0xFF4B5B7C),
         automaticallyImplyLeading:
             true, // para que se muestre el ícono del Drawer
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Icon(Icons.confirmation_num),
+            Icon(Icons.confirmation_num, color: Colors.white),
             SizedBox(width: 5),
-            Text('W&S Tickets'),
-            SizedBox(width: 10),
+            Text(
+              'W&S Tickets',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            SizedBox(width: 45),
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -31,56 +36,12 @@ class Homepage extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person, color: Colors.white),
             ),
           ],
         ),
       ),
-      drawer: Drawer(
-        backgroundColor: Color(0xFFF1F0FB),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF4B5B7C)),
-              child: Text(
-                'Menú de Navegación',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home, color: Colors.white),
-              title: Text('Home', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Homepage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.add_circle_outline),
-              title: Text('Crear Ticket'),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Dashboard()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text('Dashboard'),
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Creartickets()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerBase(),
       body: Row(
         children: [
           // Lado izquierdo
@@ -89,12 +50,15 @@ class Homepage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 15, bottom: 15),
               child: Container(
-                decoration: BoxDecoration(color: Color(0xFF4B5B7C)),
-                child: Center(
-                  child: Text(
-                    "Lado izquierdo",
-                    style: TextStyle(color: Colors.white),
+                decoration: BoxDecoration(
+                  color: Color(0xFF4B5B7C),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
+                ),
+                child: Center(
+                  child: Text("", style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
@@ -107,9 +71,123 @@ class Homepage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Container(height: 100, color: Colors.amber),
+                  Container(
+                    width: double.infinity,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+                        Text('BIENBENIDO', style: TextStyle(fontSize: 25)),
+                        SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: Text(
+                            'En la APP W&S Tickets podras crear y monitorear tus ticktes relacionados al area de tecnologia.',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 10),
-                  Container(height: 100, color: Colors.green),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 30),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => const Creartickets(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    backgroundColor: Color(0xFF161927),
+                                    textStyle: TextStyle(fontSize: 18),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add_circle_outline,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Crear Ticket',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const Dashboard(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    backgroundColor: Color(0xFF161927),
+                                    textStyle: TextStyle(fontSize: 18),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.dashboard,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Ir al Dashboard',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -119,3 +197,4 @@ class Homepage extends StatelessWidget {
     );
   }
 }
+

@@ -25,9 +25,16 @@ class Porfilepagina extends StatelessWidget {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(Icons.person_2),
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      ),
                     SizedBox(width: 5),
-                    Text('Perfil'),
+                    Text(
+                      'Perfil',
+                      style: TextStyle(
+                        color: Colors.white
+                      ),),
                     SizedBox(width: 10),
                   ],
                 ),
