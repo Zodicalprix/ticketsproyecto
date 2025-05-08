@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/widgets/textos_fijos.dart';
@@ -78,51 +77,24 @@ class Porfilepagina extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
+          Padding(
+            padding: const EdgeInsets.only(top: 440),
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-              child: Container(
-                height: 400,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      TextoProfile(
-                        textoInicio: 'Nombre: ',
-                        textoFinal: 'Santiago Lopez Arteaga',
-                      ),
-                      TextoProfile(
-                        textoInicio: 'Email: ',
-                        textoFinal: 'Lopezarteaga@d1.com.co',
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextoProfile(textoFinal: '22', textoInicio: 'Edad: '),
-                          SizedBox(width: 15),
-                          TextoProfile(
-                            textoInicio: 'Regional: ',
-                            textoFinal: 'SUR',
-                          ),
-                        ],
-                      ),
-                      TextoProfile(
-                        textoInicio: 'Cargo: ',
-                        textoFinal: 'Practicante de sistemas',
-                      ),
-                    ],
-                  ),
-                ),
+              child: Column(
+                children: [
+                  TextosProfile(textoFinalP: 'Santiago Lopez Arteaga', textoInicialP: 'Nombre'),
+                  SizedBox(height: 10,),
+                  TextosProfile(textoInicialP: 'Email', textoFinalP: 'Lopezarteaga.13@gmail.com'),
+                  SizedBox(height: 10,),
+                  TextosProfile(textoInicialP: 'Regional', textoFinalP: 'SUR'),
+                  SizedBox(height: 10,),
+                  TextosProfile(textoInicialP: 'Cargo', textoFinalP: 'Practicante sistemas'),
+                  SizedBox(height: 10,),
+                  TextosProfile(textoInicialP: 'Edad', textoFinalP: '23'),
+                  SizedBox(height: 10,),
+                  TextosProfile(textoInicialP: 'Genero', textoFinalP: 'Masculino'),
+                ],
               ),
             ),
           ),

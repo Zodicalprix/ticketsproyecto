@@ -18,15 +18,12 @@ class Homepage extends StatelessWidget {
         automaticallyImplyLeading:
             true, // para que se muestre el ícono del Drawer
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.confirmation_num, color: Colors.white),
-            SizedBox(width: 5),
             Text(
-              'W&S Tickets',
+              'HOME',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            SizedBox(width: 45),
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -156,7 +153,7 @@ class Homepage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const Dashboard(),
+                                        builder: (context) => Dashboard(),
                                       ),
                                     );
                                   },

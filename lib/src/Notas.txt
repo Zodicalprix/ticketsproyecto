@@ -17,3 +17,5 @@ Colores:
 -Azul gris 0xFF4B5B7C
 -Azul acero 0xFF6E8FAF
 -Gris suave 0xFFA1BFD9
+
+IntrinsicHeight: Asegura que los 2 contenedores tengan la misma altura

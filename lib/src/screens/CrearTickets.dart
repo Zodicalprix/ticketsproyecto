@@ -12,12 +12,9 @@ class Creartickets extends StatelessWidget {
         leading: IconDrawer(),
         backgroundColor: Color(0xFF4B5B7C),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.confirmation_num, color: Colors.white),
-            SizedBox(width: 10),
-            Text('W&S Tickets', style: TextStyle(color: Colors.white)),
-            SizedBox(width: 45),
+            Text('TICKETS', style: TextStyle(color: Colors.white)),
             IconButton(
               onPressed: () {
                 Navigator.push(

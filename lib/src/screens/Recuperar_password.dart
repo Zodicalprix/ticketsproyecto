@@ -7,10 +7,14 @@ import 'package:ticketsproyecto/src/widgets/campo_texto.dart';
 class RecuperarPassword extends StatelessWidget {
   const RecuperarPassword({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(appBar: AppBar(title: Text('Cards dinámicas')),
+    body: Row(
+      
+    )
+    );
   }
 }
-
-
