@@ -2,15 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Recuperar_password.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
+import 'package:ticketsproyecto/src/service/push_notification.dart';
 import 'package:ticketsproyecto/src/widgets/botones_icons.dart';
 
 import '../widgets/campo_texto.dart';
 
-class Loginscreen extends StatelessWidget {
-  Loginscreen({super.key});
+class Loginscreen extends StatefulWidget {
+  const Loginscreen({Key? key}) : super(key: key);
 
+  @override
+  State<Loginscreen> createState() => _LoginscreenState();
+}
+
+class _LoginscreenState extends State<Loginscreen> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+
+
+
+  static String? token;
+
+  @override
+  void initState(){
+    super.initState();
+    token = PushNotificationService.token;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,3 +166,7 @@ class Loginscreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
