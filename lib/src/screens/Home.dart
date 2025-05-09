@@ -16,7 +16,7 @@ class Homepage extends StatelessWidget {
         leading: IconDrawer(),
         backgroundColor: Color(0xFF4B5B7C),
         automaticallyImplyLeading:
-            true, // para que se muestre el ícono del Drawer
+            true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -24,7 +24,7 @@ class Homepage extends StatelessWidget {
               'HOME',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            IconButton(
+            IconButton( 
               onPressed: () {
                 Navigator.push(
                   context,
