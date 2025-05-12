@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Recuperar_password.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
+import 'package:ticketsproyecto/src/service/auth_service.dart';
 import 'package:ticketsproyecto/src/service/push_notification.dart';
 import 'package:ticketsproyecto/src/widgets/botones_icons.dart';
 
@@ -15,158 +17,133 @@ class Loginscreen extends StatefulWidget {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-
-
-
-  static String? token;
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
 
   @override
-  void initState(){
-    super.initState();
-    token = PushNotificationService.token;
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    super.dispose();
   }
 
+  void signIn() async {
+    try {
+      await authService.value.signIn(
+        email: emailcontroller.text,
+        password: passwordcontroller.text,
+      );
+      Navigator.of(context).pushReplacementNamed('/home');
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF1F0FB),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 80, right: 20, left: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.login, color: Color(0xFF2A3A5B)),
-                SizedBox(width: 15),
-                Text('LOGIN', style: TextStyle(fontSize: 30)),
-              ],
-            ),
+      backgroundColor: Color(0xFF2A3A5B),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Container(
-                height: 500,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xFF2A3A5B),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(200),
-                    topRight: Radius.circular(200),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(height: 135),
+
+                Icon(Icons.confirmation_num, color: Colors.white, size: 80),
+                SizedBox(height: 15),
+                Text(
+                  'W&S Tickets',
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
+                SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Email',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      SizedBox(height: 10),
+                      CampoTexto(
+                        controller: emailcontroller,
+                        hintText: 'Email@example.com',
+                        obscureText: false,
+                        validator: (value) {},
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        'Contraseña',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      SizedBox(height: 10),
+                      CampoTexto(
+                        controller: passwordcontroller,
+                        hintText: '',
+                        obscureText: true,
+                        validator: (value) {},
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
+                SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => RecuperarPassword()),
+                    );
+                  },
+                  child: Text(
+                    'Olvidaste tu contraseña?',
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 80,
-                        left: 10,
-                        right: 10,
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          Color(0xFF161927),
+                        ),
+                        padding: WidgetStateProperty.all<EdgeInsets>(
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                        ),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.confirmation_num,
+                      onPressed: signIn,
+                      child: Text('Iniciar sesión',
+                          style: TextStyle(
                             color: Colors.white,
-                            size: 40,
-                          ),
-                          SizedBox(width: 15),
-                          Text(
-                            'W&S Tickets',
-                            style: TextStyle(color: Colors.white, fontSize: 30),
-                          ),
-                        ],
-                      ),
+                            fontSize: 15,
+                          )),
                     ),
-                    SizedBox(height: 50),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Email',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                          SizedBox(height: 10),
-                          CampoTexto(
-                            controller: emailcontroller,
-                            hintText: 'Email@example.com',
-                            obscureText: false,
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            'Contraseña',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                          SizedBox(height: 10),
-                          CampoTexto(
-                            controller: passwordcontroller,
-                            hintText: '',
-                            obscureText: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            style: ButtonStyle(),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RecuperarPassword(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Olvidaste tu contraseña?',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BotonPre(
-                          Navegador: Homepage(),
-                          textoBoton: 'Iniciar sesion',
-                        ),
-                        SizedBox(width: 20),
-                        BotonPre(
-                          Navegador: Registerpagina(),
-                          textoBoton: 'Registrar',
-                        ),
-                      ],
+                    SizedBox(width: 20),
+                    BotonPre(
+                      Navegador: Registerpagina(),
+                      textoBoton: 'Registrar',
                     ),
                   ],
                 ),
-              ),
+                SizedBox(height: 40),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
 }
-
-
-
-

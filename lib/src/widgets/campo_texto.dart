@@ -11,7 +11,7 @@ const CampoTexto({
     super.key,
     required this.controller,
     required this.hintText,
-    required this.obscureText
+    required this.obscureText, required String? Function(dynamic value) validator
   }
 );
 

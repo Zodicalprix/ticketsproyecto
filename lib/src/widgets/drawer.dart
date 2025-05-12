@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Login.dart';
-import 'package:ticketsproyecto/src/screens/Profile.dart';
-import '../widgets/botones_icons.dart';
+
 
 class DrawerBase extends StatelessWidget {
   const DrawerBase({super.key});
@@ -21,7 +19,7 @@ class DrawerBase extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(color: Color(0xFF4B5B7C)),
+                decoration: BoxDecoration(color: Color(0xFF2A3A5B)),
                 child: Text(
                   'Menú de Navegación',
                   style: TextStyle(color: Colors.white, fontSize: 20),

@@ -3,7 +3,6 @@ import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
-import '../widgets/botones_icons.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -14,7 +13,7 @@ class Homepage extends StatelessWidget {
       backgroundColor: Color(0xFFF1F0FB),
       appBar: AppBar(
         leading: IconDrawer(),
-        backgroundColor: Color(0xFF4B5B7C),
+        backgroundColor: Color(0xFF2A3A5B),
         automaticallyImplyLeading:
             true,
         title: Row(
@@ -48,7 +47,7 @@ class Homepage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 15, bottom: 15),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF4B5B7C),
+                  color: Color(0xFF2A3A5B),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
                     bottomRight: Radius.circular(30),

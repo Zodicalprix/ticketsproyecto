@@ -6,6 +6,7 @@ import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Login.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
+import 'package:ticketsproyecto/src/screens/auth_layout.dart';
 
 
 Map<String, Widget Function(BuildContext)> appRoutes = {
@@ -15,4 +16,5 @@ Map<String, Widget Function(BuildContext)> appRoutes = {
   Routes.dashboard: (_) => Dashboard(),
   Routes.profile: (_) => Porfilepagina(),
   Routes.home: (_) => Homepage(),
+  Routes.authlayout: (_) => AuthLayout(), 
 };

@@ -17,7 +17,7 @@ class Porfilepagina extends StatelessWidget {
             clipper: WaveClipper(),
             child: Container(
               height: 300,
-              color: Color(0xFF4B5B7C),
+              color: Color(0xFF2A3A5B),
               child: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,

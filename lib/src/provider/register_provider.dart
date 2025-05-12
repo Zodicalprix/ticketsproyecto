@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,11 +19,10 @@ class RegisterProvider extends ChangeNotifier{
     required String email,
     required String password,
     required UserRole role,
-    required String bith,
+    required String birth,
     required String age,
     required String token,
-    required Function createAt,
-    required File? image,
+    required String createAt,
     required Function(String) onError,}
   )async{
     try{
@@ -46,13 +45,8 @@ class RegisterProvider extends ChangeNotifier{
     final User user = userCredential.user!;
     final String userId = user.uid;
 
-    //subir la imagen al storage
 
-    String imageUrl = '';
-    if (image != null){
-      String direction = 'user/$username/$userId.jpg';
-      imageUrl = await uploadImage(direction, image);
-    }
+
 
     final userDatos = {
       'id':userId,
@@ -61,10 +55,9 @@ class RegisterProvider extends ChangeNotifier{
       'password':password,
       'email':email,
       'rol':role,
-      'birth':bith,
+      'birth':birth,
       'age':age,
       'token':token,
-      'image':imageUrl,
       'createAt': createAt,
     };
 
@@ -95,12 +88,6 @@ class RegisterProvider extends ChangeNotifier{
     return result.docs.isNotEmpty;  
   }
 
-  //metodo para guardar imagen en el storage
 
-  Future<String> uploadImage(String ref, File file) async{
-    final UploadTask uploadTask = _storage.ref().child(ref).putFile(file);
-    final TaskSnapshot taskSnapshot = await uploadTask;
-    final String url = await taskSnapshot.ref.getDownloadURL();
-    return url;
-  }
+
 }
