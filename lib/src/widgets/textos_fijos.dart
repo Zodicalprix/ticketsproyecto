@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class TextosProfile extends StatelessWidget {
   final String textoInicialP;

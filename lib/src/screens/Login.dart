@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Recuperar_password.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
-import 'package:ticketsproyecto/src/service/push_notification.dart';
 import 'package:ticketsproyecto/src/widgets/botones_icons.dart';
-
 import '../widgets/campo_texto.dart';
 
 class Loginscreen extends StatefulWidget {

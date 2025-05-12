@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/routes/routes.dart';
-
 import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
-import 'package:ticketsproyecto/src/screens/Login.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
 
 
