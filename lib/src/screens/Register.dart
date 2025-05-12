@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:ticketsproyecto/src/provider/register_provider.dart';
+import 'package:ticketsproyecto/src/routes/routes.dart';
+
 import 'package:ticketsproyecto/src/service/auth_service.dart';
 import 'package:ticketsproyecto/src/widgets/campo_texto.dart';
 
@@ -37,12 +38,35 @@ class _RegisterpaginaState extends State<Registerpagina> {
     super.dispose();
   }
 
-  void register()async{
+  void datosUser() async{
+    final user = FirebaseAuth.instance.currentUser;
+    if (user!= null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'userId': user.uid,
+        'Nombre': nombrecontroller.text,
+        'Email': emailcontroller.text,
+        'Regional': regionalcontroller.text,
+        'Cargo': cargocontroller.text,
+        'Edad': edadcontroller.text,
+      });
+      print('Datos de usuario guardados en Firestore');
+    } else {
+      print('No hay usuario autenticado');
+    }
+  }
+
+  void register() async{
     try{
       await authService.value.createAccount(
       email: emailcontroller.text, 
-      password: passwordcontroller.text);
-      Navigator.of(context).pushReplacementNamed('/home');
+      password: passwordcontroller.text,
+      confpassword: confpasswordcontroller.text, 
+      nombre: nombrecontroller.text, 
+      regional: regionalcontroller.text, 
+      cargo: cargocontroller.text, 
+      edad: edadcontroller.text,
+      );
+      Navigator.pushNamed(context, Routes.login);
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
@@ -120,6 +144,16 @@ class _RegisterpaginaState extends State<Registerpagina> {
                         ),
                         SizedBox(height: 30),
                         CampoTexto(
+                          controller: cargocontroller,
+                          hintText: 'Cargo',
+                          obscureText: false,
+                          validator: (value) =>
+                              value == null || value.length < 6
+                                  ? 'Cargo requerido'
+                                  : null,
+                        ),
+                        SizedBox(height: 30),
+                        CampoTexto(
                           controller: passwordcontroller,
                           hintText: 'Contraseña',
                           obscureText: true,
@@ -147,7 +181,10 @@ class _RegisterpaginaState extends State<Registerpagina> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 80),
                 child: TextButton(
-                  onPressed: () => register(),
+                  onPressed: () async {
+                    register();
+                    datosUser();
+                  },
                   child: Text(
                     'REGISTRAR',
                     style: TextStyle(color: Color(0xFF161927), fontSize: 30),

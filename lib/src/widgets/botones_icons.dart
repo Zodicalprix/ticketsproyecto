@@ -57,3 +57,37 @@ class BotonPre extends StatelessWidget {
     );
   }
 }
+class BotonFuncion extends StatelessWidget {
+  final VoidCallback presionado;
+  const BotonFuncion({
+    super.key,
+    required this.textoBotonF,
+    required this.presionado,});
+
+  final String textoBotonF;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF161927)),
+        padding: WidgetStateProperty.all<EdgeInsets>(
+          EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        ),
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      onPressed: 
+        presionado,
+      child: Text(
+        textoBotonF,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+  }

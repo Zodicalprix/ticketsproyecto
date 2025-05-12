@@ -1,13 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketsproyecto/src/routes/routes.dart';
 
 import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/screens/Login.dart';
+import 'package:ticketsproyecto/src/service/auth_service.dart';
 
 
 class DrawerBase extends StatelessWidget {
   const DrawerBase({super.key});
+
+  void logout(BuildContext context) async {
+    try {
+      await authService.value.signOut();
+      Navigator.pushNamed(context, Routes.login);
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +91,7 @@ class DrawerBase extends StatelessWidget {
                   minimumSize: Size(double.infinity, 50),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Loginscreen(),
-                    ));
+                  logout(context);
                 },
                 icon: Icon(Icons.logout, color: Colors.white),
                 label: Text(
@@ -92,6 +101,7 @@ class DrawerBase extends StatelessWidget {
               ),
             ),
           ),
+
         ],
       ),
     );

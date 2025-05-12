@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:ticketsproyecto/src/service/datos_service.dart';
 import 'package:ticketsproyecto/src/widgets/textos_fijos.dart';
 
 import '../widgets/clipper_ola.dart';
@@ -19,21 +19,20 @@ class Porfilepagina extends StatelessWidget {
               height: 300,
               color: Color(0xFF2A3A5B),
               child: AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      ),
+                    Icon(Icons.person, color: Colors.white),
                     SizedBox(width: 5),
-                    Text(
-                      'Perfil',
-                      style: TextStyle(
-                        color: Colors.white
-                      ),),
+                    Text('Perfil', style: TextStyle(color: Colors.white)),
                     SizedBox(width: 10),
                   ],
                 ),
@@ -81,21 +80,53 @@ class Porfilepagina extends StatelessWidget {
             padding: const EdgeInsets.only(top: 440),
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-              child: Column(
-                children: [
-                  TextosProfile(textoFinalP: 'Santiago Lopez Arteaga', textoInicialP: 'Nombre'),
-                  SizedBox(height: 10,),
-                  TextosProfile(textoInicialP: 'Email', textoFinalP: 'Lopezarteaga.13@gmail.com'),
-                  SizedBox(height: 10,),
-                  TextosProfile(textoInicialP: 'Regional', textoFinalP: 'SUR'),
-                  SizedBox(height: 10,),
-                  TextosProfile(textoInicialP: 'Cargo', textoFinalP: 'Practicante sistemas'),
-                  SizedBox(height: 10,),
-                  TextosProfile(textoInicialP: 'Edad', textoFinalP: '23'),
-                  SizedBox(height: 10,),
-                  TextosProfile(textoInicialP: 'Genero', textoFinalP: 'Masculino'),
-                ],
-              ),
+      child: FutureBuilder<Map<String, dynamic>?>(
+        future: obtenerDatosUsuario(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Text('No se encontraron datos del usuario');
+          } else {
+            final data = snapshot.data!;
+            final Nombre = data['Nombre'] ?? 'No disponible';
+            final Email = data['Email'] ?? 'No disponible';
+            final Regional = data['Regional'] ?? 'No disponible';
+            final Cargo = data['Cargo'] ?? 'No disponible';
+            final Edad = data['Edad'] ?? 'No disponible';
+            return Column(
+              children: [
+                TextosProfile(
+                  textoFinalP: Nombre,
+                  textoInicialP: 'Nombre',
+                ),
+                SizedBox(height: 10),
+                TextosProfile(
+                  textoInicialP: 'Email',
+                  textoFinalP: Email,
+                ),
+                SizedBox(height: 10),
+                TextosProfile(
+                  textoInicialP: 'Regional',
+                  textoFinalP: Regional,
+                ),
+                SizedBox(height: 10),
+                TextosProfile(
+                  textoInicialP: 'Cargo',
+                  textoFinalP: Cargo,
+                ),
+                SizedBox(height: 10),
+                TextosProfile(
+                  textoInicialP: 'Edad',
+                  textoFinalP: Edad,
+                ),
+              ],
+            );
+          }
+        },
+      ),
             ),
           ),
         ],

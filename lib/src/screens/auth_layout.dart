@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/routes/routes.dart';
+import 'package:ticketsproyecto/src/screens/Login.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
 
 class AuthLayout extends StatelessWidget {
@@ -26,9 +27,9 @@ class AuthLayout extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushReplacementNamed(context, Routes.home);
               });
-              return const SizedBox(); // Return an empty widget to satisfy the return type
+              return const SizedBox(); 
             }else{
-              return pageItNotConnected ?? const Center(child: Text('Login'));
+              return pageItNotConnected ?? const Loginscreen();
             }
           }
         );
