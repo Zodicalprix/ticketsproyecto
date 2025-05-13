@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
+import 'package:ticketsproyecto/src/service/datos_service.dart' as datosService;
+import 'package:ticketsproyecto/src/widgets/botones_icons.dart';
 import 'package:ticketsproyecto/src/widgets/campo_texto.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
 class Creartickets extends StatefulWidget {
   Creartickets({super.key,});
 
-  
+
   @override
   State<Creartickets> createState() => _CrearticketsState();
 }
+
+
 
 class _CrearticketsState extends State<Creartickets> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController motivoTicketController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
 
+  @override
+  void dispose() {
+    motivoTicketController.dispose();
+    descripcionController.dispose();
+    super.dispose();
+  }
+
+  void crearTicketF() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      await datosService.crearTickets(
+        motivoTicketController.text,
+        descripcionController.text,
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +66,7 @@ class _CrearticketsState extends State<Creartickets> {
         child: SingleChildScrollView(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 20),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             child: Form(
               key: _formKey,
               child: Container(
@@ -90,6 +110,20 @@ class _CrearticketsState extends State<Creartickets> {
                           return null;
                         },
                       ),
+                      CampoDescripcion(
+                        controller: descripcionController, 
+                        hintText: 'Descripción del Ticket', 
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese una descripción';
+                          }
+                          return null;
+                        },
+                      ),
+                      BotonFuncion(
+                        textoBotonF: 'Crear Ticket', 
+                        presionado: crearTicketF),
+                      SizedBox(height: 15), 
                     ],
                   ),
                 ),

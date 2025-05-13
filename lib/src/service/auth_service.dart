@@ -28,6 +28,7 @@ class AuthService {
     required String regional,
     required String cargo,
     required String edad,
+    required String rol,
   }) async {
     if (password != confpassword) {
       throw Exception('Las contraseñas no coinciden');
@@ -45,6 +46,7 @@ class AuthService {
           'Regional': regional,
           'Cargo': cargo,
           'Edad': edad,
+          'rol': rol
         });
         print('Datos de usuario guardados en Firestore');
         return userCredential;

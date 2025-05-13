@@ -64,7 +64,8 @@ class _RegisterpaginaState extends State<Registerpagina> {
       nombre: nombrecontroller.text, 
       regional: regionalcontroller.text, 
       cargo: cargocontroller.text, 
-      edad: edadcontroller.text,
+      edad: edadcontroller.text, 
+      rol: 'user',
       );
       Navigator.pushNamed(context, Routes.login);
     } on FirebaseAuthException catch (e) {

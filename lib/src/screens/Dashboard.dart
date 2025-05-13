@@ -1,17 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   Dashboard({super.key});
 
-    final List<Map<String, String>> datos = [
-    {'titulo': 'Card 1', 'descripcion': 'Descripción 1'},
-    {'titulo': 'Card 2', 'descripcion': 'Descripción 2'},
-    {'titulo': 'Card 3', 'descripcion': 'Descripción 3'},
-    // ... más datos desde la base
-  ];
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  Future<List<Map<String, String>>> obtenerTickets() async {
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) return [];
+
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance
+              .collection('tickets')
+              .where('userId', isEqualTo: userId)
+              .get();
+
+      return snapshot.docs.map((doc) {
+        return {
+          'motivo': doc['motivo'] as String,
+          'descripcion': doc['descripcion'] as String,
+        };
+      }).toList();
+    } catch (e) {
+      print('Error al obtener tickets: $e');
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,39 +55,50 @@ class Dashboard extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-                ),
+              icon: Icon(Icons.person, color: Colors.white),
             ),
           ],
         ),
       ),
       drawer: DrawerBase(),
-      body: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ListView.builder(
-        itemCount: datos.length,
-        itemBuilder: (context, index) {
-          final item = datos[index];
-          return Card(
-            color: Colors.white,
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: ListTile(
-              leading: Icon(Icons.info, color: Color(0xFF6E8FAF)),
-              title: Text(item['titulo']!),
-              subtitle: Text(item['descripcion']!),
-              onTap: () {
-                // Acción al tocar
-              },
-            ),
-          );
+      body: FutureBuilder<List<Map<String, String>>>(
+        future: obtenerTickets(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error al obtener tickets: ${snapshot.error}'),
+            );
+          } else {
+            final datos = snapshot.data ?? [];
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView.builder(
+                itemCount: datos.length,
+                itemBuilder: (context, index) {
+                  final item = datos[index];
+                  return Card(
+                    color: Colors.white,
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Color(0xFF6E8FAF)),
+                      title: Text(item['motivo']!),
+                      subtitle: Text(item['descripcion']!),
+                      onTap: () {
+                        // Acción al tocar
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          }
         },
       ),
-    )
     );
   }
 }
