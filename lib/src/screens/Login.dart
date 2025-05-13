@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketsproyecto/src/routes/routes.dart';
 import 'package:ticketsproyecto/src/screens/Recuperar_password.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
@@ -93,10 +94,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => RecuperarPassword()),
-                    );
+                    Navigator.pushNamed(context, Routes.recuperarpassword);
                   },
                   child: Text(
                     'Olvidaste tu contraseña?',

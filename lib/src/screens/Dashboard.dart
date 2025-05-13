@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ticketsproyecto/src/routes/routes.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
@@ -39,6 +40,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1F0FB),
       appBar: AppBar(
         leading: IconDrawer(),
         backgroundColor: Color(0xFF2A3A5B),
@@ -85,11 +87,14 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.info, color: Color(0xFF6E8FAF)),
+                      leading: Icon(Icons.info_outline_rounded, color: Color(0xFF161927)),
                       title: Text(item['motivo']!),
-                      subtitle: Text(item['descripcion']!),
+                      subtitle: Text(item['descripcion']!,
+                      style: TextStyle(
+                        color: Color(0xFF161927),
+                      ),),
                       onTap: () {
-                        // Acción al tocar
+                        Navigator.pushNamed(context, Routes.caseview);
                       },
                     ),
                   );

@@ -77,7 +77,7 @@ class Homepage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: 30),
-                        Text('BIENBENIDO', style: TextStyle(fontSize: 25)),
+                        Text('BIENVENIDO', style: TextStyle(fontSize: 25)),
                         SizedBox(height: 15),
                         Padding(
                           padding: const EdgeInsets.only(left: 15, right: 15),

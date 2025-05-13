@@ -9,4 +9,5 @@ class Routes {
   static const String recuperarpassword = '/recuperarpassword';
   static const String home = '/home';
   static const String authlayout = '/authlayout';
+  static const String caseview = '/caseview';
   }
