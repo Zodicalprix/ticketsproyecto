@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ticketsproyecto/src/routes/routes.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
+import 'package:ticketsproyecto/src/screens/case_viewer.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
 class Dashboard extends StatefulWidget {
@@ -27,6 +28,7 @@ class _DashboardState extends State<Dashboard> {
 
       return snapshot.docs.map((doc) {
         return {
+          'id': doc.id,
           'motivo': doc['motivo'] as String,
           'descripcion': doc['descripcion'] as String,
         };
@@ -87,14 +89,25 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.info_outline_rounded, color: Color(0xFF161927)),
-                      title: Text(item['motivo']!),
-                      subtitle: Text(item['descripcion']!,
-                      style: TextStyle(
+                      leading: Icon(
+                        Icons.info_outline_rounded,
                         color: Color(0xFF161927),
-                      ),),
+                      ),
+                      title: Text(item['motivo']!),
+                      subtitle: Text(
+                        item['descripcion']!,
+                        style: TextStyle(color: Color(0xFF161927)),
+                      ),
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.caseview);
+                        final idDoc = item['id'];
+                        if (idDoc != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CasoView(idDocumento: idDoc)
+                            ),
+                          );
+                        }
                       },
                     ),
                   );

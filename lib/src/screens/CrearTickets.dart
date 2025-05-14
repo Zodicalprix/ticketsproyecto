@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/service/datos_service.dart' as datosService;
 import 'package:ticketsproyecto/src/widgets/botones_icons.dart';

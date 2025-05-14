@@ -54,24 +54,3 @@ Future<void> crearTickets(
   }
 }
 
-
-// Future<Map<String, dynamic>?> obtenerTickets() async {
-//   try {
-//     final userId = FirebaseAuth.instance.currentUser?.uid;
-//     if (userId == null) return null;
-
-//     QuerySnapshot snapshot = await FirebaseFirestore.instance
-//         .collection('tickets')
-//         .where('userId', isEqualTo: userId)
-//         .get();
-
-//     if (snapshot.docs.isNotEmpty) {
-//       return snapshot.docs.first.data() as Map<String, dynamic>;
-//     } else {
-//       return null;
-//     }
-//   } catch (e) {
-//     print('Error al obtener tickets: $e');
-//     return null;
-//   }
-// }

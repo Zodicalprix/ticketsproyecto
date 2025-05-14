@@ -19,6 +19,6 @@ Map<String, Widget Function(BuildContext)> appRoutes = {
   Routes.profile: (_) => Porfilepagina(),
   Routes.home: (_) => Homepage(),
   Routes.authlayout: (_) => AuthLayout(), 
-  Routes.caseview: (_) => const CasoView(),
+  Routes.caseview: (_) => const CasoView(idDocumento: '',),
   Routes.recuperarpassword: (_) => RecuperarPassword(),
 };
