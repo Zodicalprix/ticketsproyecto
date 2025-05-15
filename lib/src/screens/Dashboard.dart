@@ -6,7 +6,7 @@ import 'package:ticketsproyecto/src/screens/case_viewer.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({super.key});
+  const Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
                 .get();
 
         return snapshot.docs.map((doc) {
-          final data = doc.data() as Map<String, dynamic>;
+          final data = doc.data();
           return {
             'id': doc.id,
             'motivo': data['motivo']?.toString() ?? '',
@@ -59,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
                 .get();
 
         return snapshot.docs.map((doc) {
-          final data = doc.data() as Map<String, dynamic>;
+          final data = doc.data();
           return {
             'id': doc.id,
             'motivo': data['motivo']?.toString() ?? '',
@@ -75,7 +75,18 @@ class _DashboardState extends State<Dashboard> {
       return [];
     }
   }
-
+  Color getColorEstado(String estado) {
+  switch (estado) {
+    case 'Abierto':
+      return Colors.red;
+    case 'Cerrado':
+      return Colors.green;
+    case 'En proceso':
+      return Colors.yellow;
+    default:
+      return Colors.grey;
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,8 +138,8 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     child: ListTile(
                       leading: Icon(
-                        Icons.info_outline_rounded,
-                        color: Color(0xFF161927),
+                        Icons.circle,
+                        color: getColorEstado(item['estado'] ?? ''),
                       ),
                       title: Text(item['motivo']!),
                       subtitle: Text(

@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketsproyecto/src/service/datos_service.dart';
+import 'package:ticketsproyecto/src/widgets/modificar_panel.dart';
 
 class CasoView extends StatefulWidget {
   final String idDocumento;
@@ -9,104 +9,15 @@ class CasoView extends StatefulWidget {
   @override
   State<CasoView> createState() => _CasoViewState();
 }
-void _mostrarPanel(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-    ),
-    builder: (context) {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-          left: 20,
-          right: 20,
-          top: 20,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Campo de texto
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Escribe algo...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            // Tres opciones
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // acción 1
-                  },
-                  icon: Icon(Icons.star),
-                  label: Text('Opción 1'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // acción 2
-                  },
-                  icon: Icon(Icons.check),
-                  label: Text('Opción 2'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // acción 3
-                  },
-                  icon: Icon(Icons.close),
-                  label: Text('Opción 3'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
-      );
-    },
-  );
-}
-Future<Map<String, dynamic>?> obtenerDetallesCaso(String idDocumento) async {
-  await Future.delayed(const Duration(seconds: 2));
-  try {
-    DocumentSnapshot snapshot =
-        await FirebaseFirestore.instance
-            .collection('tickets')
-            .doc(idDocumento)
-            .get();
-    if (snapshot.exists) {
-      return snapshot.data() as Map<String, dynamic>;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    print('Error al obtener detalles del caso: $e');
-    return null;
-  }
-}
 
-Future<bool> permisosBoton() async {
-  final userId = FirebaseAuth.instance.currentUser?.uid;
-  if (userId == null) return false;
 
-  final doc =
-      await FirebaseFirestore.instance.collection('users').doc(userId).get();
 
-  if (doc.exists) {
-    final rol = doc.data()?['rol'];
-    return rol == 'admin' || rol == 'superadmin';
-  }
 
-  return false;
-}
 
 class _CasoViewState extends State<CasoView> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,7 +43,6 @@ class _CasoViewState extends State<CasoView> {
           } else {
             final data = snapshot.data;
             final Caso = data?['Caso'] ?? 'Información no disponible';
-            final Regional = data?['regional'] ?? 'Información no disponible';
             final FechaCreacion =
                 data?['fechaCreacion']?.toDate() ?? DateTime.now();
             final Motivo = data?['motivo'] ?? 'Información no disponible';
@@ -273,7 +183,7 @@ class _CasoViewState extends State<CasoView> {
                                 } else if (snapshot.hasData &&
                                     snapshot.data == true) {
                                   return ElevatedButton(
-                                    onPressed: () => _mostrarPanel(context),
+                                    onPressed: () => mostrarPanel(context),
                                     style: ElevatedButton.styleFrom(
                                       shape: const CircleBorder(),
                                       backgroundColor: const Color(0xFF2A3A5B),

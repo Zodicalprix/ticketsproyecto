@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/routes/routes.dart';
-import 'package:ticketsproyecto/src/screens/Recuperar_password.dart';
 import 'package:ticketsproyecto/src/screens/Register.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
 import 'package:ticketsproyecto/src/widgets/botones_icons.dart';
@@ -74,7 +73,9 @@ class _LoginscreenState extends State<Loginscreen> {
                         controller: emailcontroller,
                         hintText: 'Email@example.com',
                         obscureText: false,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                       ),
                       SizedBox(height: 30),
                       Text(
@@ -86,7 +87,9 @@ class _LoginscreenState extends State<Loginscreen> {
                         controller: passwordcontroller,
                         hintText: '',
                         obscureText: true,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                       ),
                     ],
                   ),
