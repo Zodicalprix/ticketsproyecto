@@ -5,7 +5,7 @@ import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Home.dart';
 import 'package:ticketsproyecto/src/service/auth_service.dart';
-
+import 'package:ticketsproyecto/src/service/datos_service.dart';
 
 class DrawerBase extends StatelessWidget {
   const DrawerBase({super.key});
@@ -45,22 +45,7 @@ class DrawerBase extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.add_circle_outline,
-                  color: Color(0xFF161927),
-                ),
-                title: Text(
-                  'Crear Ticket',
-                  style: TextStyle(color: Color(0xFF161927)),
-                ),
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Creartickets()),
-                  );
-                },
-              ),
+
               ListTile(
                 leading: Icon(Icons.dashboard, color: Color(0xFF161927)),
                 title: Text(
@@ -70,10 +55,37 @@ class DrawerBase extends StatelessWidget {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) =>  Dashboard()
-                    ),
+                    MaterialPageRoute(builder: (context) => Dashboard()),
                   );
+                },
+              ),
+              FutureBuilder<bool>(
+                future: crearTicketsUsers(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox();
+                  } else if (snapshot.hasData && snapshot.data == true) {
+                    return ListTile(
+                      leading: Icon(
+                        Icons.add_circle_outline,
+                        color: Color(0xFF161927),
+                      ),
+                      title: Text(
+                        'Crear Ticket',
+                        style: TextStyle(color: Color(0xFF161927)),
+                      ),
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Creartickets(),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
                 },
               ),
             ],
@@ -98,7 +110,6 @@ class DrawerBase extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

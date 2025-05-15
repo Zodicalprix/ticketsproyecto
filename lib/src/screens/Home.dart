@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticketsproyecto/src/screens/CrearTickets.dart';
 import 'package:ticketsproyecto/src/screens/Dashboard.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
+import 'package:ticketsproyecto/src/service/datos_service.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
 
 class Homepage extends StatelessWidget {
@@ -14,16 +15,12 @@ class Homepage extends StatelessWidget {
       appBar: AppBar(
         leading: IconDrawer(),
         backgroundColor: Color(0xFF2A3A5B),
-        automaticallyImplyLeading:
-            true,
+        automaticallyImplyLeading: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'HOME',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            IconButton( 
+            Text('HOME', style: TextStyle(color: Colors.white, fontSize: 20)),
+            IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -101,45 +98,64 @@ class Homepage extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(height: 30),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                              ),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) => Creartickets(),
+                            FutureBuilder(
+                              future: crearTicketsUsers(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator();
+                                } else if (snapshot.hasData &&
+                                    snapshot.data == true) {
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) => Creartickets(),
+                                            ),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 20,
+                                          ),
+                                          backgroundColor: Color(0xFF161927),
+                                          textStyle: TextStyle(fontSize: 18),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.add_circle_outline,
+                                              color: Colors.white,
+                                              size: 25,
+                                            ),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              'Crear Ticket',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(vertical: 20),
-                                    backgroundColor: Color(0xFF161927),
-                                    textStyle: TextStyle(fontSize: 18),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add_circle_outline,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'Crear Ticket',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                    ),
+                                  );
+                                } else {
+                                  return const Text('');
+                                }
+                              },
                             ),
+
                             SizedBox(height: 20),
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -193,4 +209,3 @@ class Homepage extends StatelessWidget {
     );
   }
 }
-

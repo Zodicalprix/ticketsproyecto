@@ -54,3 +54,19 @@ Future<void> crearTickets(
   }
 }
 
+Future<bool> crearTicketsUsers()async {
+
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+  if (userId == null) return false;
+
+  final doc =
+      await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+  if (doc.exists) {
+    final rol = doc.data()?['rol'];
+    return rol == 'user';
+  }
+
+  return false;
+}
+

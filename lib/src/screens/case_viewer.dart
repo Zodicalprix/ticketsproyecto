@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CasoView extends StatefulWidget {
@@ -26,6 +27,21 @@ Future<Map<String, dynamic>?> obtenerDetallesCaso(String idDocumento) async {
     print('Error al obtener detalles del caso: $e');
     return null;
   }
+}
+
+Future<bool> permisosBoton() async {
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+  if (userId == null) return false;
+
+  final doc =
+      await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+  if (doc.exists) {
+    final rol = doc.data()?['rol'];
+    return rol == 'admin' || rol == 'superadmin';
+  }
+
+  return false;
 }
 
 class _CasoViewState extends State<CasoView> {
@@ -151,9 +167,7 @@ class _CasoViewState extends State<CasoView> {
                       ),
                       Container(
                         constraints: BoxConstraints(
-                          minHeight:
-                              MediaQuery.of(context).size.height *
-                              0.5, 
+                          minHeight: MediaQuery.of(context).size.height * 0.5,
                         ),
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -171,7 +185,10 @@ class _CasoViewState extends State<CasoView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -185,16 +202,31 @@ class _CasoViewState extends State<CasoView> {
                                 ),
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: () {}, 
-                              child: Icon(Icons.edit,
-                              color: Colors.white, size: 20),
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                backgroundColor: const Color(0xFF2A3A5B),
-                                padding: const EdgeInsets.all(10),
-                              )
-                              ,
+                            FutureBuilder<bool>(
+                              future: permisosBoton(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const SizedBox();
+                                } else if (snapshot.hasData &&
+                                    snapshot.data == true) {
+                                  return ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      backgroundColor: const Color(0xFF2A3A5B),
+                                      padding: const EdgeInsets.all(10),
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              },
                             ),
                           ],
                         ),
