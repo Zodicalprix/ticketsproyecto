@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 Future<Map<String, dynamic>?> obtenerDatosUsuario() async {
   try {
@@ -157,4 +158,79 @@ Future<bool> permisosBoton() async {
   }
 
   return false;
+}
+
+  Future<List<Map<String, String>>> obtenerTickets() async {
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) return [];
+
+      final userDoc =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userId)
+              .get();
+      if (!userDoc.exists) return [];
+
+      final userData = userDoc.data();
+      final rol = userData?['rol']?.toString();
+      final regional = userData?['Regional']?.toString();
+
+      if (rol == null) return [];
+
+      if (rol == 'admin' || rol == 'superadmin') {
+        if (regional == null) return [];
+
+        final snapshot =
+            await FirebaseFirestore.instance
+                .collection('tickets')
+                .where('Regional', isEqualTo: regional)
+                .get();
+
+        return snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {
+            'id': doc.id,
+            'motivo': data['motivo']?.toString() ?? '',
+            'descripcion': data['descripcion']?.toString() ?? '',
+            'solucion': data['solucion']?.toString() ?? '',
+            'estado': data['estado']?.toString() ?? '',
+            'Tecnico': data['Tecnico']?.toString() ?? '',
+          };
+        }).toList();
+      } else {
+        final snapshot =
+            await FirebaseFirestore.instance
+                .collection('tickets')
+                .where('userId', isEqualTo: userId)
+                .get();
+
+        return snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {
+            'id': doc.id,
+            'motivo': data['motivo']?.toString() ?? '',
+            'descripcion': data['descripcion']?.toString() ?? '',
+            'solucion': data['solucion']?.toString() ?? '',
+            'estado': data['estado']?.toString() ?? '',
+            'Tecnico': data['Tecnico']?.toString() ?? '',
+          };
+        }).toList();
+      }
+    } catch (e) {
+      print('Error al obtener tickets: $e');
+      return [];
+    }
+  }
+  Color getColorEstado(String estado) {
+  switch (estado) {
+    case 'Abierto':
+      return Colors.red;
+    case 'Cerrado':
+      return Colors.green;
+    case 'En proceso':
+      return Colors.yellow;
+    default:
+      return Colors.grey;
+  }
 }

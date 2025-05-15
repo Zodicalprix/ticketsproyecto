@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ticketsproyecto/src/service/datos_service.dart';
 import 'package:ticketsproyecto/src/widgets/campo_texto.dart';
 
-void mostrarPanel(BuildContext context) {
+void mostrarPanel(BuildContext context, String idDocumento) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -35,25 +36,43 @@ void mostrarPanel(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
+                  
+                    await modificarCaso(
+                      idDocumento,
+                      solucionController.text,
+                      'Abierto', 
+                    );
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.star),
-                  label: Text('Opción 1'),
+                  label: Text('Abierto'),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
+                  
+                    await modificarCaso(
+                      idDocumento,
+                      solucionController.text,
+                      'Cerrado', 
+                    );
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.check),
-                  label: Text('Opción 2'),
+                  label: Text('Cerrado'),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
+                  
+                    await modificarCaso(
+                      idDocumento,
+                      solucionController.text,
+                      'En Proceso', 
+                    );
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.close),
-                  label: Text('Opción 3'),
+                  label: Text('En Proceso'),
                 ),
               ],
             ),

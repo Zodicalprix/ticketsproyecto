@@ -18,6 +18,7 @@ class _CasoViewState extends State<CasoView> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +49,8 @@ class _CasoViewState extends State<CasoView> {
             final Motivo = data?['motivo'] ?? 'Información no disponible';
             final Descripcion =
                 data?['descripcion'] ?? 'Información no disponible';
+            final Solucion = data?['solucion'] ?? '';
+            final Tecnico = data?['Tecnico'] ?? '';
             return SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
@@ -151,9 +154,22 @@ class _CasoViewState extends State<CasoView> {
                           ),
                         ),
                         padding: const EdgeInsets.all(20),
-                        child: Text(
-                          Descripcion,
-                          style: TextStyle(fontSize: 16),
+                        child: Column(
+                          children: [
+                            Text(
+                              Descripcion,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(height: 30),
+                            Text(
+                              Solucion,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              Tecnico,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -183,7 +199,7 @@ class _CasoViewState extends State<CasoView> {
                                 } else if (snapshot.hasData &&
                                     snapshot.data == true) {
                                   return ElevatedButton(
-                                    onPressed: () => mostrarPanel(context),
+                                    onPressed: () => mostrarPanel(context, widget.idDocumento),
                                     style: ElevatedButton.styleFrom(
                                       shape: const CircleBorder(),
                                       backgroundColor: const Color(0xFF2A3A5B),
