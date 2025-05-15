@@ -47,7 +47,10 @@ Future<void> crearTickets(
       'motivo': motivo,
       'descripcion': descripcion,
       'fechaCreacion': FieldValue.serverTimestamp(),
-      'regional': datosUser.data()?['Regional'],
+      'Regional': datosUser.data()?['Regional'],
+      'solucion': '',
+      'estado': 'Abierto',
+      'Tecnico': '',
     });
   } catch (e) {
     print('Error al crear ticket: $e');

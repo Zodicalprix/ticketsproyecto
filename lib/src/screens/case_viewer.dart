@@ -9,7 +9,69 @@ class CasoView extends StatefulWidget {
   @override
   State<CasoView> createState() => _CasoViewState();
 }
-
+void _mostrarPanel(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+    ),
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 20,
+          right: 20,
+          top: 20,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Campo de texto
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Escribe algo...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            // Tres opciones
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // acción 1
+                  },
+                  icon: Icon(Icons.star),
+                  label: Text('Opción 1'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // acción 2
+                  },
+                  icon: Icon(Icons.check),
+                  label: Text('Opción 2'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // acción 3
+                  },
+                  icon: Icon(Icons.close),
+                  label: Text('Opción 3'),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      );
+    },
+  );
+}
 Future<Map<String, dynamic>?> obtenerDetallesCaso(String idDocumento) async {
   await Future.delayed(const Duration(seconds: 2));
   try {
@@ -211,7 +273,7 @@ class _CasoViewState extends State<CasoView> {
                                 } else if (snapshot.hasData &&
                                     snapshot.data == true) {
                                   return ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => _mostrarPanel(context),
                                     style: ElevatedButton.styleFrom(
                                       shape: const CircleBorder(),
                                       backgroundColor: const Color(0xFF2A3A5B),

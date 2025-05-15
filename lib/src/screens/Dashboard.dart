@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:ticketsproyecto/src/routes/routes.dart';
 import 'package:ticketsproyecto/src/screens/Profile.dart';
 import 'package:ticketsproyecto/src/screens/case_viewer.dart';
 import 'package:ticketsproyecto/src/widgets/drawer.dart';
@@ -20,19 +18,58 @@ class _DashboardState extends State<Dashboard> {
       final userId = FirebaseAuth.instance.currentUser?.uid;
       if (userId == null) return [];
 
-      QuerySnapshot snapshot =
+      final userDoc =
           await FirebaseFirestore.instance
-              .collection('tickets')
-              .where('userId', isEqualTo: userId)
+              .collection('users')
+              .doc(userId)
               .get();
+      if (!userDoc.exists) return [];
 
-      return snapshot.docs.map((doc) {
-        return {
-          'id': doc.id,
-          'motivo': doc['motivo'] as String,
-          'descripcion': doc['descripcion'] as String,
-        };
-      }).toList();
+      final userData = userDoc.data();
+      final rol = userData?['rol']?.toString();
+      final regional = userData?['Regional']?.toString();
+
+      if (rol == null) return [];
+
+      if (rol == 'admin' || rol == 'superadmin') {
+        if (regional == null) return [];
+
+        final snapshot =
+            await FirebaseFirestore.instance
+                .collection('tickets')
+                .where('Regional', isEqualTo: regional)
+                .get();
+
+        return snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {
+            'id': doc.id,
+            'motivo': data['motivo']?.toString() ?? '',
+            'descripcion': data['descripcion']?.toString() ?? '',
+            'solucion': data['solucion']?.toString() ?? '',
+            'estado': data['estado']?.toString() ?? '',
+            'Tecnico': data['Tecnico']?.toString() ?? '',
+          };
+        }).toList();
+      } else {
+        final snapshot =
+            await FirebaseFirestore.instance
+                .collection('tickets')
+                .where('userId', isEqualTo: userId)
+                .get();
+
+        return snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {
+            'id': doc.id,
+            'motivo': data['motivo']?.toString() ?? '',
+            'descripcion': data['descripcion']?.toString() ?? '',
+            'solucion': data['solucion']?.toString() ?? '',
+            'estado': data['estado']?.toString() ?? '',
+            'Tecnico': data['Tecnico']?.toString() ?? '',
+          };
+        }).toList();
+      }
     } catch (e) {
       print('Error al obtener tickets: $e');
       return [];
@@ -104,7 +141,8 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CasoView(idDocumento: idDoc)
+                              builder:
+                                  (context) => CasoView(idDocumento: idDoc),
                             ),
                           );
                         }
